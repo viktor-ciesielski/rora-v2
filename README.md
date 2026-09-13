@@ -28,13 +28,13 @@ run `python3 -m http.server` in this folder and open http://localhost:8000.)
 This is a first draft. Anything with a dotted underline on the page is a
 placeholder:
 
-- **Project images.** Every image is generated artwork standing in for real
-  photography, labelled "placeholder visual" on the page. Replace the `.shot`
-  blocks in `index.html` with real `<img>` tags once there are photos.
-- **The three projects** (clinic booking, field inspection, membership site) are
-  invented examples.
-- **Contact email** — currently `hello@roramake.ca`.
-- **Timings** in the process section, response time, and the availability month.
+- **The three demos.** The work section has three slots waiting on real
+  screenshots and a line each about what the project does. The artwork in them
+  is generated, and labelled "screenshot to come".
+- **Response time and availability** in the contact section — confirm or cut
+  them.
+
+Contact details are real: viktor@roramake.ca and 438-855-3303.
 
 ## Putting it online
 
