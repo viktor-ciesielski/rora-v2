@@ -29,9 +29,10 @@ run `python3 -m http.server` in this folder and open http://localhost:8000.)
 This is a first draft. Anything with a dotted underline on the page is a
 placeholder:
 
-- **The barbershop demo** — the second work slot is waiting on a real screenshot
-  and a line about what it does. Its artwork is generated and labelled
-  "screenshot to come".
+- **A second demo.** The work section shows one project. To add the barbershop
+  demo later, copy the Vesari `<article class="piece wide rv">` block in
+  `index.html`, point the `<img>` at a new screenshot in `assets/img/`, and
+  rewrite the caption.
 - **Response time and availability** in the contact section — confirm or cut
   them.
 
