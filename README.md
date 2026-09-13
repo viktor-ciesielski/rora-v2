@@ -21,6 +21,7 @@ run `python3 -m http.server` in this folder and open http://localhost:8000.)
 | `index.html` | Every word on the page. This is the file to edit for copy changes. |
 | `assets/css/site.css` | All the styling: colours, type, spacing, layout. |
 | `assets/js/site.js` | The motion — hero artwork, scroll reveals, parallax, cursor. |
+| `assets/img/` | Screenshots of the demos. |
 | `assets/favicon.svg` | The little icon in the browser tab. |
 
 ## Still to replace
@@ -28,11 +29,15 @@ run `python3 -m http.server` in this folder and open http://localhost:8000.)
 This is a first draft. Anything with a dotted underline on the page is a
 placeholder:
 
-- **The three demos.** The work section has three slots waiting on real
-  screenshots and a line each about what the project does. The artwork in them
-  is generated, and labelled "screenshot to come".
+- **The barbershop demo** — the second work slot is waiting on a real screenshot
+  and a line about what it does. Its artwork is generated and labelled
+  "screenshot to come".
 - **Response time and availability** in the contact section — confirm or cut
   them.
+
+The Vesari slot is real: `assets/img/demo-vesari.jpg` is the demo captured
+running. Note the 3D model in it carries a visible Omega logo, so swap the model
+or reshoot before the site goes public.
 
 Contact details are real: viktor@roramake.ca and 438-855-3303.
 
