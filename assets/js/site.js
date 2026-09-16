@@ -1,5 +1,6 @@
 /* Rora — roramake.ca
-   Generative hero, scroll reveals, parallax and cursor. No dependencies. */
+   Generative hero, scroll reveals, parallax, swipeable word band, cursor.
+   No dependencies. */
 
 (function(){
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -119,6 +120,68 @@
       el.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'start'});
     });
   });
+
+  /* ---------- word band: keeps drifting, can be dragged ---------- */
+  (function(){
+    var band = document.querySelector('.band');
+    var track = band && band.querySelector('.track');
+    if(!band || !track) return;
+
+    band.classList.add('swipe');
+
+    var half = 0, x = 0, vel = 0, dragging = false, lastX = 0, last = performance.now();
+    var SPEED = 1 / 38000;           /* one full lap of the duplicated words per 38s */
+
+    function measure(){
+      half = track.scrollWidth / 2;
+      if(half > 0){ while(x <= -half) x += half; while(x > 0) x -= half; }
+    }
+    measure();
+    window.addEventListener('resize', measure);
+    if(document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+
+    function frame(now){
+      var dt = Math.min(now - last, 60); last = now;
+      if(!dragging && half > 0){
+        if(!reduce) x -= half * SPEED * dt;
+        if(vel){
+          x += vel * (dt / 16.67);
+          vel *= Math.pow(0.90, dt / 16.67);
+          if(Math.abs(vel) < 0.02) vel = 0;
+        }
+        if(x <= -half) x += half; else if(x > 0) x -= half;
+        track.style.transform = 'translate3d(' + x.toFixed(2) + 'px,0,0)';
+      }
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+
+    band.addEventListener('pointerdown', function(e){
+      if(e.button && e.button !== 0) return;
+      dragging = true; vel = 0; lastX = e.clientX;
+      band.classList.add('dragging');
+      try{ band.setPointerCapture(e.pointerId); }catch(err){}
+    });
+    band.addEventListener('pointermove', function(e){
+      if(!dragging || !half) return;
+      var dx = e.clientX - lastX; lastX = e.clientX;
+      x += dx;
+      vel = dx * 0.55 + vel * 0.45;
+      if(x <= -half) x += half; else if(x > 0) x -= half;
+      track.style.transform = 'translate3d(' + x.toFixed(2) + 'px,0,0)';
+    });
+    function release(e){
+      if(!dragging) return;
+      dragging = false;
+      band.classList.remove('dragging');
+      vel = Math.max(-22, Math.min(22, vel));
+      last = performance.now();
+      try{ band.releasePointerCapture(e.pointerId); }catch(err){}
+    }
+    band.addEventListener('pointerup', release);
+    band.addEventListener('pointercancel', release);
+    band.addEventListener('dragstart', function(e){ e.preventDefault(); });
+  })();
 
   /* ---------- cursor ---------- */
   var cur = document.getElementById('cur');

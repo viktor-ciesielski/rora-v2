@@ -226,8 +226,15 @@ section{padding-block:clamp(72px,11vw,168px);}
 .note{color:var(--muted);max-width:1500px;margin:clamp(26px,3vw,40px) auto 0;}
 
 /* marquee */
-.band{border-block:1px solid var(--line);padding-block:clamp(16px,2vw,26px);overflow:hidden;}
+.band{
+  border-block:1px solid var(--line);padding-block:clamp(16px,2vw,26px);overflow:hidden;
+  touch-action:pan-y;cursor:grab;
+  user-select:none;-webkit-user-select:none;
+}
+.band.dragging{cursor:grabbing;}
 .track{display:flex;width:max-content;gap:0;animation:slide 38s linear infinite;}
+.band.swipe .track{animation:none;will-change:transform;}
+.track span{-webkit-user-drag:none;}
 .track span{
   font-family:"Archivo",sans-serif;font-weight:200;font-size:clamp(1.3rem,3vw,2.4rem);
   letter-spacing:-.02em;color:var(--ink-soft);padding-inline:clamp(18px,3vw,40px);white-space:nowrap;
