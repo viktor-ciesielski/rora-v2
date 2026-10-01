@@ -1,0 +1,688 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Manga Bistro Sushi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --paper: #F2F3EE;
+    --paper-2: #E6E8E1;
+    --ink: #17181D;
+    --ink-soft: #4A4D57;
+    --salmon: #FF7650;
+    --salmon-deep: #D9502B;
+    --sakura: #F6BCCB;
+    --line: 3px;
+    --display: "Dela Gothic One", "Hiragino Kaku Gothic ProN", "Arial Black", sans-serif;
+    --body: "Zen Kaku Gothic New", "Hiragino Sans", "Segoe UI", system-ui, sans-serif;
+    --mono: "DM Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 400 16px/1.6 var(--body); }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--salmon); outline-offset: 3px; }
+  h1, h2, h3 { font-family: var(--display); font-weight: 400; line-height: 1.05; text-wrap: balance; margin: 0; }
+  p { margin: 0; }
+
+  #site[data-lang="fr"] [lang="en"], #site[data-lang="en"] [lang="fr"] { display: none; }
+
+  .wrap { max-width: 1180px; margin: 0 auto; padding-inline: 20px; }
+  .label { font: 500 12px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; }
+  .jp { font-family: var(--display); }
+
+  /* ---------- Top bar ---------- */
+  .bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--ink); color: var(--paper); }
+  .bar .wrap { display: flex; align-items: center; gap: 16px; min-height: 60px; }
+  .brand { display: flex; align-items: baseline; gap: 10px; text-decoration: none; margin-right: auto; }
+  .brand b { font: 400 22px/1 var(--display); letter-spacing: .01em; }
+  .brand span { font: 500 11px/1 var(--mono); letter-spacing: .2em; color: var(--sakura); }
+  .nav { display: flex; gap: 22px; }
+  .nav a { text-decoration: none; font-weight: 500; font-size: 15px; }
+  .nav a:hover { color: var(--sakura); }
+  .lang { display: flex; border: 2px solid var(--paper); border-radius: 999px; overflow: hidden; }
+  .lang button { all: unset; cursor: pointer; font: 500 12px/1 var(--mono); padding: 7px 10px; letter-spacing: .08em; }
+  .lang button[aria-pressed="true"] { background: var(--paper); color: var(--ink); }
+  .lang button:focus-visible { outline: 2px solid var(--salmon); outline-offset: -2px; }
+  .status { display: flex; align-items: center; gap: 8px; font: 500 12px/1 var(--mono); letter-spacing: .06em; white-space: nowrap; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--ink-soft); flex: none; }
+  .status.open .dot { background: #5BD18B; box-shadow: 0 0 0 4px rgba(91,209,139,.22); }
+  .status.closed .dot { background: var(--salmon); }
+  @media (max-width: 860px) { .nav { display: none; } }
+  @media (max-width: 460px) { .status .when { display: none; } .brand span { display: none; } }
+
+  /* ---------- Hero: a manga page ---------- */
+  .hero { padding-block: 28px 44px; }
+  .page { display: grid; grid-template-columns: 1.35fr 1fr; grid-template-rows: auto auto; gap: 14px; }
+  .panel { position: relative; border: var(--line) solid var(--ink); background: var(--paper); overflow: hidden; }
+  .p-main { grid-row: span 2; padding: clamp(24px, 4vw, 48px); display: flex; flex-direction: column; justify-content: space-between; gap: 28px; min-height: 520px;
+    background:
+      radial-gradient(circle at 1px 1px, rgba(23,24,29,.16) 1.2px, transparent 1.6px) 0 0 / 9px 9px,
+      var(--paper); clip-path: polygon(0 0, 100% 0, 97% 100%, 0 100%); }
+  .p-main .kicker { display: inline-flex; align-self: flex-start; background: var(--ink); color: var(--paper); padding: 8px 12px; }
+  .p-main h1 { font-size: clamp(44px, 7.4vw, 96px); letter-spacing: -.01em; }
+  .p-main h1 em { font-style: normal; color: var(--salmon-deep); }
+  .p-main .lede { font-size: clamp(17px, 1.6vw, 19px); max-width: 34ch; color: var(--ink-soft); }
+  .ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 20px; border: var(--line) solid var(--ink); background: var(--paper); font-weight: 700; font-size: 16px; text-decoration: none; cursor: pointer; transition: transform .12s, box-shadow .12s; box-shadow: 5px 5px 0 var(--ink); }
+  .btn:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--ink); }
+  .btn.primary { background: var(--salmon); }
+  .btn small { font: 500 13px/1 var(--mono); }
+
+  .p-art { background: #22152C; min-height: 300px; display: grid; place-items: center; padding: 28px;
+    clip-path: polygon(4% 0, 100% 0, 100% 100%, 0 100%); }
+  .p-art::before { content: ""; position: absolute; inset: -40%; background: repeating-conic-gradient(from 0deg at 50% 50%, rgba(255,118,80,.12) 0 1.2deg, transparent 1.2deg 7deg); }
+  .p-art { padding: 0; }
+  .p-art .spread { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .p-art .sticker { position: absolute; left: 7%; bottom: 14px; width: min(54%, 250px); height: auto; border: 3px solid var(--ink); border-radius: 14px; box-shadow: 5px 5px 0 var(--ink); transform: rotate(-3deg); }
+
+  .p-rating { padding: 22px 24px; background: var(--sakura); display: grid; grid-template-columns: auto 1fr; gap: 6px 18px; align-items: center; clip-path: polygon(0 0, 100% 0, 100% 100%, 3% 100%); }
+  .p-rating .big { grid-row: span 2; font: 400 64px/1 var(--display); }
+  .stars { font-size: 20px; letter-spacing: 3px; color: var(--ink); }
+  .p-rating p { font-size: 14px; }
+
+  @media (max-width: 860px) {
+    .page { grid-template-columns: 1fr; }
+    .p-main { grid-row: auto; min-height: 0; clip-path: none; }
+    .p-art, .p-rating { clip-path: none; }
+  }
+
+  /* ---------- Marquee ---------- */
+  .ticker { border-block: var(--line) solid var(--ink); background: var(--salmon); overflow: hidden; }
+  .ticker div { display: flex; gap: 40px; width: max-content; padding-block: 12px; animation: slide 38s linear infinite; font: 400 20px/1 var(--display); white-space: nowrap; }
+  .ticker span::after { content: "✦"; margin-left: 40px; }
+  @keyframes slide { to { transform: translateX(-50%); } }
+
+  /* ---------- Sections ---------- */
+  section.block { padding-block: 84px; }
+  .head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 40px; margin-bottom: 40px; }
+  .head h2 { font-size: clamp(34px, 5vw, 60px); }
+  .head .jp-tag { font: 400 15px/1 var(--display); color: var(--salmon-deep); display: block; margin-bottom: 12px; letter-spacing: .1em; }
+  .head p { max-width: 44ch; color: var(--ink-soft); }
+
+  /* How it works */
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; counter-reset: step; }
+  .steps li { border: var(--line) solid var(--ink); padding: 22px 20px 24px; display: flex; flex-direction: column; gap: 12px; background: var(--paper); counter-increment: step; }
+  .steps li::before { content: counter(step); font: 400 44px/1 var(--display); color: var(--salmon); -webkit-text-stroke: 1.5px var(--ink); paint-order: stroke; }
+  .steps h3 { font-size: 21px; }
+  .steps p { font-size: 15px; color: var(--ink-soft); }
+  @media (max-width: 900px) { .steps { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .steps { grid-template-columns: 1fr; } }
+
+  /* Menu */
+  .menu-sec { background: var(--ink); color: var(--paper); }
+  .menu-sec .head p { color: #B9BBC2; }
+  .menu-sec .head .jp-tag { color: var(--sakura); }
+  .price { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 42px; }
+  .price > div { border: 2px dashed #6B6E78; padding: 18px 20px; display: grid; gap: 6px; }
+  .price .label { color: var(--sakura); }
+  .price strong { font: 400 28px/1.1 var(--display); }
+  .price small { color: #9C9FA8; font-size: 13px; }
+  @media (max-width: 700px) { .price { grid-template-columns: 1fr; } }
+  .plates { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 14px; margin-bottom: 42px; }
+  .plate { position: relative; margin: 0; border: var(--line) solid var(--paper); aspect-ratio: 4 / 5; max-width: 100%; overflow: hidden; background: #22152C; }
+  .plate.wide { aspect-ratio: auto; }
+  .plate img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+  .plate:hover img { transform: scale(1.05); }
+  .plate figcaption { position: absolute; left: 12px; bottom: 12px; background: var(--paper); color: var(--ink); font: 700 14px/1 var(--body); padding: 8px 10px; border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--salmon); }
+  .plate.broken img { display: none; }
+  @media (max-width: 760px) { .plates { grid-template-columns: 1fr 1fr; } .plate.wide { grid-column: span 2; aspect-ratio: 4 / 3; } }
+  .dishes { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 0; border-top: 1px solid #3A3C44; }
+  .dish { padding: 22px 20px 24px 0; border-bottom: 1px solid #3A3C44; display: grid; grid-template-columns: 52px 1fr; gap: 4px 14px; }
+  .dish .ico { grid-row: span 2; width: 52px; height: 52px; border: 2px solid var(--paper); border-radius: 50%; display: grid; place-items: center; font: 400 20px/1 var(--display); color: var(--ink); background: var(--sakura); }
+  .dish.hot .ico { background: var(--salmon); }
+  .dish h3 { font-size: 19px; }
+  .dish p { font-size: 14px; color: #B9BBC2; }
+  .tag { display: inline-block; margin-left: 6px; font: 500 10px/1 var(--mono); letter-spacing: .1em; background: var(--salmon); color: var(--ink); padding: 4px 6px; vertical-align: 3px; }
+  .menu-note { margin-top: 26px; font-size: 14px; color: #9C9FA8; }
+
+  /* Inside */
+  .banner { border: var(--line) solid var(--ink); margin-bottom: 14px; aspect-ratio: 1030 / 280; max-width: 100%; overflow: hidden; }
+  .banner img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .inside { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: repeat(3, 240px); gap: 14px; }
+  .shot { border: var(--line) solid var(--ink); position: relative; overflow: hidden; margin: 0; background: var(--ink); }
+  .shot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+  .shot:hover img { transform: scale(1.04); }
+  .shot figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 40px 18px 16px; color: var(--paper); background: linear-gradient(transparent, rgba(23,24,29,.88)); }
+  .shot h3 { font-size: 21px; }
+  .shot p { font-size: 14px; margin-top: 4px; max-width: 34ch; color: #E3E4E0; }
+  .shot.luffy, .shot.naruto { grid-row: span 2; }
+  .shot.luffy { grid-column: 1; grid-row: 1 / span 2; }
+  .shot.naruto { grid-column: 4; grid-row: 1 / span 2; }
+  .shot.naruto img { object-position: 40% 20%; filter: sepia(.2) saturate(1.2) contrast(1.05); }
+  .shot.strawhats { grid-column: 1; }
+  .shot.umbrella { grid-column: span 2; }
+  .shot.luffy img { object-position: 50% 20%; }
+  .shot.tablet { grid-column: 2 / span 3; display: grid; grid-template-columns: 1fr 1.1fr; align-items: center; gap: 18px; padding: 20px 24px;
+    background: radial-gradient(ellipse at 85% 20%, rgba(255,170,70,.55), transparent 55%), radial-gradient(ellipse at 10% 100%, rgba(255,118,80,.35), transparent 50%), #22152C; }
+  .shot.tablet::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 1px 1px, rgba(246,188,203,.12) 1.2px, transparent 1.6px) 0 0 / 9px 9px; }
+  .shot.tablet figcaption { position: relative; background: none; padding: 0; }
+  .shot.tablet p { color: #E9D9E0; }
+  .tb-tag { display: inline-block; font: 400 12px/1 var(--display); color: var(--ink); background: #FFB547; padding: 5px 8px; margin-bottom: 10px; letter-spacing: .08em; }
+  .tb-device { position: relative; justify-self: end; width: min(100%, 280px); padding: 10px; background: var(--ink); border-radius: 18px; border: 2px solid #3A2A48; box-shadow: 0 0 0 3px var(--ink), 0 0 40px rgba(255,170,70,.35); transform: rotate(3deg); }
+  .tb-screen { background: var(--paper); border-radius: 10px; padding: 10px; display: grid; gap: 8px; }
+  .tb-top { display: flex; justify-content: space-between; font: 500 10px/1 var(--mono); letter-spacing: .1em; color: var(--ink); }
+  .tb-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .tb-item { position: relative; aspect-ratio: 1; border-radius: 6px; overflow: hidden; border: 2px solid var(--ink); background: var(--sakura); }
+  .shot .tb-item img { position: static; width: 100%; height: 100%; object-fit: cover; display: block; }
+  .tb-item i { position: absolute; right: 3px; bottom: 3px; width: 20px; height: 20px; border-radius: 50%; background: var(--salmon); border: 2px solid var(--ink); color: var(--ink); font: 700 14px/15px var(--body); font-style: normal; text-align: center; }
+  .tb-item i.tap { animation: tap 1.8s ease-in-out infinite; }
+  .tb-send { background: var(--salmon); border: 2px solid var(--ink); border-radius: 6px; text-align: center; font: 700 12px/1 var(--body); padding: 8px; color: var(--ink); }
+  @keyframes tap { 0%, 60%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,118,80,.7); } 70% { transform: scale(.8); } 80% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(255,118,80,0); } }
+  @media (max-width: 480px) { .shot.tablet { grid-template-columns: 1fr; } .tb-device { justify-self: center; } }
+  @media (max-width: 860px) { .inside { grid-template-columns: 1fr 1fr; grid-template-rows: none; grid-auto-rows: 220px; } .shot.luffy { grid-column: 1; grid-row: 1 / span 2; } .shot.naruto { grid-column: 2; grid-row: 1 / span 2; } .shot.umbrella, .shot.tablet, .shot.strawhats { grid-column: span 2; } }
+  @media (max-width: 480px) { .inside { grid-template-columns: 1fr; grid-auto-rows: 240px; } .shot.luffy, .shot.naruto { grid-column: auto; grid-row: span 2; } .shot.umbrella, .shot.tablet, .shot.strawhats { grid-column: auto; } .shot.tablet { grid-row: span 2; } }
+
+  /* Reviews */
+  .reviews { display: grid; grid-template-columns: 1fr 1.4fr; gap: 40px; align-items: center; }
+  .score { border: var(--line) solid var(--ink); padding: 28px; background: var(--sakura); box-shadow: 8px 8px 0 var(--ink); }
+  .score .big { font: 400 88px/1 var(--display); }
+  .score p { margin-top: 8px; }
+  .bars { display: grid; gap: 12px; }
+  .bars .row { display: grid; grid-template-columns: 56px 1fr 48px; gap: 14px; align-items: center; font: 500 14px/1 var(--mono); font-variant-numeric: tabular-nums; }
+  .bars .track { height: 22px; border: 2px solid var(--ink); background: var(--paper); }
+  .bars .fill { height: 100%; background: var(--ink); }
+  .bars .row:first-child .fill { background: var(--salmon); }
+  .bars .src { font: 400 13px/1.5 var(--body); color: var(--ink-soft); margin-top: 6px; }
+  @media (max-width: 760px) { .reviews { grid-template-columns: 1fr; } }
+
+  /* Visit */
+  .visit-sec { background: var(--paper-2); border-top: var(--line) solid var(--ink); }
+  .visit { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  .card { border: var(--line) solid var(--ink); background: var(--paper); padding: 24px; display: flex; flex-direction: column; gap: 14px; }
+  .card h3 { font-size: 22px; }
+  .hours { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  .hours td { padding: 8px 0; border-bottom: 1px solid var(--paper-2); font-size: 15px; }
+  .hours td:last-child { text-align: right; font-family: var(--mono); font-size: 14px; }
+  .hours tr.today td { font-weight: 700; color: var(--salmon-deep); }
+  .copy { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .copy code { font: 500 20px/1.2 var(--mono); user-select: all; }
+  .mini { all: unset; cursor: pointer; font: 500 11px/1 var(--mono); letter-spacing: .08em; border: 2px solid var(--ink); padding: 6px 8px; }
+  .mini:focus-visible { outline: 3px solid var(--salmon); outline-offset: 2px; }
+  .facts { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; font-size: 15px; }
+  .facts li { display: flex; gap: 10px; }
+  .facts li::before { content: "▸"; color: var(--salmon-deep); }
+  .card .btn { align-self: flex-start; margin-top: auto; }
+  @media (max-width: 960px) { .visit { grid-template-columns: 1fr 1fr; } .visit .card:last-child { grid-column: span 2; } }
+  @media (max-width: 620px) { .visit { grid-template-columns: 1fr; } .visit .card:last-child { grid-column: auto; } }
+
+  /* ---------- Motion ---------- */
+  @keyframes panelIn { from { opacity: 0; transform: translateY(22px) rotate(-1.5deg); } }
+  @keyframes slam { 0% { opacity: 0; transform: scale(1.7) rotate(-4deg); } 60% { opacity: 1; transform: scale(.94) rotate(1deg); } 100% { transform: none; } }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes bob { 50% { transform: translateY(-8px) rotate(-1deg); } }
+  @keyframes pulse { 50% { box-shadow: 0 0 0 7px rgba(91,209,139,0); } }
+  @keyframes grow { from { transform: scaleX(0); } }
+  @keyframes rise { from { transform: translateY(46px) rotate(.6deg); } }
+  @keyframes pop { 0% { transform: scale(0) rotate(-20deg); } 70% { transform: scale(1.15) rotate(6deg); } 100% { transform: scale(1) rotate(-8deg); } }
+  .p-main { animation: panelIn .6s cubic-bezier(.2,.8,.2,1) both; }
+  .p-art { animation: panelIn .6s .12s cubic-bezier(.2,.8,.2,1) both; }
+  .p-rating { animation: panelIn .6s .24s cubic-bezier(.2,.8,.2,1) both; }
+  .p-main h1 em { display: inline-block; animation: slam .55s .55s cubic-bezier(.2,.8,.2,1) both; }
+  .p-art::before { animation: spin 90s linear infinite; }
+  .p-art .sticker { animation: bob 4.5s ease-in-out infinite; }
+  .status.open .dot { animation: pulse 2s ease-in-out infinite; }
+  .bars .fill { transform-origin: left; }
+  .bars.play .fill { animation: grow .9s cubic-bezier(.2,.8,.2,1) both; }
+  .bars.play .row:nth-child(2) .fill { animation-delay: .08s; }
+  .bars.play .row:nth-child(3) .fill { animation-delay: .16s; }
+  .bars.play .row:nth-child(4) .fill { animation-delay: .24s; }
+  .dish .ico { transition: transform .25s cubic-bezier(.2,.8,.2,1); }
+  .dish:hover .ico { transform: rotate(-10deg) scale(1.12); }
+  .dish.hot { position: relative; }
+  .dish.hot::after { content: "ジュッ!"; position: absolute; right: 8px; top: 10px; font: 400 18px/1 var(--display); color: var(--salmon); transform: scale(0); pointer-events: none; }
+  .dish.hot:hover::after { animation: pop .35s cubic-bezier(.2,.8,.2,1) both; }
+  .steps li { transition: transform .2s, box-shadow .2s; }
+  .steps li:hover { transform: translate(-3px, -3px); box-shadow: 6px 6px 0 var(--ink); }
+  @supports (animation-timeline: view()) {
+    .steps li, .dish, .shot, .banner, .visit .card, .score, .head h2 { animation: rise linear both; animation-timeline: view(); animation-range: entry 0% entry 70%; }
+  }
+
+  /* ---------- Loading screen ---------- */
+  #loader { position: fixed; inset: 0; z-index: 100; background: var(--ink); color: var(--paper); display: grid; place-items: center; padding: 20px; transition: opacity .45s, visibility .45s; }
+  #loader::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 1px 1px, rgba(242,243,238,.08) 1.2px, transparent 1.6px) 0 0 / 10px 10px; }
+  #loader.done { opacity: 0; visibility: hidden; }
+  .ld-box { position: relative; display: grid; justify-items: center; gap: 18px; text-align: center; max-width: 320px; }
+  .ld-sushi { position: relative; width: 120px; height: 92px; }
+  .ld-rice { position: absolute; left: 12px; right: 12px; bottom: 0; height: 40px; border-radius: 20px; background: var(--paper); border: 3px solid var(--paper); }
+  .ld-fish { position: absolute; left: 4px; right: 4px; bottom: 30px; height: 26px; border-radius: 50% 50% 8px 8px / 100% 100% 8px 8px; background: repeating-linear-gradient(115deg, var(--salmon) 0 12px, #FFB49E 12px 16px); }
+  .ld-flame { position: absolute; left: 50%; top: 0; width: 22px; height: 30px; margin-left: -11px; background: var(--salmon); border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; box-shadow: 0 0 18px 4px rgba(255,118,80,.55); animation: flick .35s ease-in-out infinite alternate; transform-origin: 50% 100%; }
+  .ld-flame::after { content: ""; position: absolute; left: 6px; right: 6px; bottom: 3px; height: 14px; border-radius: 50%; background: var(--sakura); }
+  @keyframes flick { from { transform: scale(1, 1) rotate(-4deg); } to { transform: scale(.85, 1.15) rotate(4deg); } }
+  .ld-brand { font: 400 24px/1 var(--display); letter-spacing: .06em; }
+  .ld-bar { width: 220px; max-width: 100%; height: 10px; border: 2px solid var(--paper); }
+  .ld-bar span { display: block; height: 100%; width: 8%; background: var(--salmon); transition: width .3s; }
+  .ld-msg { font: 500 12px/1.4 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--sakura); }
+  .ld-slow { display: grid; gap: 12px; justify-items: center; font-size: 14px; color: #C9CBD1; }
+  .ld-slow .btn { color: var(--ink); box-shadow: 4px 4px 0 var(--salmon); border-color: var(--paper); padding: 10px 16px; font-size: 15px; }
+  #site.is-loading .p-main, #site.is-loading .p-art, #site.is-loading .p-rating, #site.is-loading .p-main h1 em { animation-play-state: paused; }
+
+  /* ---------- Connection toast and broken images ---------- */
+  .toast { position: fixed; left: 16px; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 60; margin-inline: auto; max-width: 520px; background: var(--ink); color: var(--paper); border: var(--line) solid var(--salmon); box-shadow: 6px 6px 0 var(--salmon); padding: 14px 16px; display: flex; gap: 14px; align-items: flex-start; animation: panelIn .35s cubic-bezier(.2,.8,.2,1) both; }
+  .toast.ok { border-color: #5BD18B; box-shadow: 6px 6px 0 #5BD18B; }
+  .toast b { font: 400 18px/1.1 var(--display); display: block; margin-bottom: 4px; }
+  .toast p { font-size: 14px; color: #C9CBD1; }
+  .toast .x { all: unset; cursor: pointer; margin-left: auto; font: 500 18px/1 var(--mono); padding: 2px 6px; }
+  .toast .x:focus-visible { outline: 2px solid var(--salmon); }
+  .shot.broken, .banner.broken { background: radial-gradient(circle at 1px 1px, rgba(242,243,238,.18) 1.3px, transparent 1.7px) 0 0 / 8px 8px, var(--ink); }
+  .shot.broken img, .banner.broken img, .p-art.broken .spread { display: none; }
+
+  footer { background: var(--ink); color: var(--paper); padding-block: 40px; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 20px 40px; align-items: center; justify-content: space-between; }
+  footer .big { font: 400 clamp(30px, 5vw, 52px)/1 var(--display); }
+  footer .big span { color: var(--salmon); }
+  footer nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto auto; grid-auto-flow: column; gap: 12px; width: min(100%, 440px); }
+  footer nav .social { width: 100%; }
+  @media (max-width: 420px) { footer nav .social { padding-right: 10px; font-size: 13px; } }
+  .social { display: inline-flex; align-items: center; gap: 10px; padding: 8px 14px 8px 8px; border: 2px solid var(--paper); border-radius: 999px; text-decoration: none; font: 500 14px/1 var(--mono); transition: transform .15s, background .15s, color .15s; }
+  .social svg { width: 34px; height: 34px; padding: 6px; border-radius: 50%; color: var(--paper); background: linear-gradient(45deg, #FEC564, #F9423A 45%, #D22D8C 70%, #8A3AB9); }
+  .social:hover { background: var(--paper); color: var(--ink); transform: translateY(-2px); }
+  .social.fb svg { background: #1877F2; }
+  .social.menu svg { background: var(--salmon); color: var(--ink); }
+  .social.clock svg { background: var(--sakura); color: var(--ink); }
+
+  footer small { display: block; width: 100%; color: #9C9FA8; font-size: 13px; }
+</style>
+
+<div id="site" data-lang="fr" class="is-loading">
+  <noscript><style>#loader { display: none; }</style></noscript>
+  <div id="loader" role="status" aria-live="polite">
+    <div class="ld-box">
+      <div class="ld-sushi" aria-hidden="true"><span class="ld-flame"></span><span class="ld-fish"></span><span class="ld-rice"></span></div>
+      <p class="ld-brand">マンガビストロ</p>
+      <div class="ld-bar" aria-hidden="true"><span id="ld-fill"></span></div>
+      <p class="ld-msg"><span lang="fr">Allumage du chalumeau…</span><span lang="en">Firing up the torch…</span></p>
+      <div class="ld-slow" id="ld-slow" hidden>
+        <p lang="fr">Votre connexion est lente. Le site continue de charger.</p>
+        <p lang="en">Your connection is slow. The site is still loading.</p>
+        <button type="button" class="btn" id="ld-skip"><span lang="fr">Entrer quand même</span><span lang="en">Go in anyway</span></button>
+      </div>
+    </div>
+  </div>
+  <div class="toast" id="toast" hidden role="status" aria-live="polite">
+    <div><b id="toast-title"></b><p id="toast-body"></p></div>
+    <button type="button" class="x" id="toast-x" aria-label="Fermer / Close">×</button>
+  </div>
+  <header class="bar">
+    <div class="wrap">
+      <a class="brand" href="#top"><b>Manga Bistro</b><span>マンガビストロ</span></a>
+      <nav class="nav" aria-label="Sections">
+        <a href="#comment"><span lang="fr">Comment ça marche</span><span lang="en">How it works</span></a>
+        <a href="#menu">Menu</a>
+        <a href="#salle"><span lang="fr">La salle</span><span lang="en">Inside</span></a>
+        <a href="#visite"><span lang="fr">Nous trouver</span><span lang="en">Visit</span></a>
+      </nav>
+      <div class="status" id="status" aria-live="polite"><span class="dot"></span><span class="now"></span><span class="when"></span></div>
+      <div class="lang" role="group" aria-label="Langue / Language">
+        <button type="button" id="lang-fr" data-set="fr" aria-pressed="true">FR</button>
+        <button type="button" id="lang-en" data-set="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <div class="wrap hero">
+      <div class="page">
+        <div class="panel p-main">
+          <span class="kicker label"><span lang="fr">Sushi à volonté · Centre-ville de Montréal</span><span lang="en">All-you-can-eat sushi · Downtown Montreal</span></span>
+          <div>
+            <h1 lang="fr">Sushi à volonté,<br>version <em>manga</em>.</h1>
+            <h1 lang="en">All-you-can-eat sushi, <em>manga</em> style.</h1>
+          </div>
+          <p class="lede" lang="fr">Sushi brûlé, donburi et brochettes commandés à la tablette, sous les parapluies japonais et sous l'œil de Luffy grandeur nature.</p>
+          <p class="lede" lang="en">Torched sushi, donburi and skewers ordered from a tablet, under Japanese umbrellas and the watch of a life-size Luffy.</p>
+          <div class="ctas">
+            <a class="btn primary" href="tel:+15143168862"><span lang="fr">Appelez-nous</span><span lang="en">Call us</span> <small>514 316-8862</small></a>
+            <a class="btn" href="#menu"><span lang="fr">Voir le menu</span><span lang="en">See the menu</span></a>
+          </div>
+        </div>
+
+        <div class="panel p-art">
+          <img class="spread" src="img/food-spread.jpg" width="1600" height="1280" alt="Vue du dessus d'une table garnie : sushi brûlés, makis, sashimi, crevettes et brochettes">
+          <img class="sticker" src="img/logo.png" width="900" height="447" alt="Logo Manga Bistro">
+        </div>
+
+        <div class="panel p-rating">
+          <span class="big"><span lang="fr">4,6</span><span lang="en">4.6</span></span>
+          <span class="stars" aria-label="4.6 / 5">★★★★½</span>
+          <p lang="fr">Plus de 3 700 avis Google. Ouvert tous les jours dès 11 h 30.</p>
+          <p lang="en">3,700+ Google reviews. Open every day from 11:30 a.m.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ticker" aria-hidden="true"><div>
+      <span>Sushi brûlé</span><span>Donburi</span><span>Beef tataki</span><span>Manga roll</span><span>Ramen au bœuf</span><span>Brochettes</span><span>Sashimi</span><span>寿司</span>
+      <span>Sushi brûlé</span><span>Donburi</span><span>Beef tataki</span><span>Manga roll</span><span>Ramen au bœuf</span><span>Brochettes</span><span>Sashimi</span><span>寿司</span>
+    </div></div>
+
+    <section class="block" id="comment">
+      <div class="wrap">
+        <div class="head">
+          <div>
+            <span class="jp-tag">食べ放題 · TABEHŌDAI</span>
+            <h2 lang="fr">Comment ça marche</h2><h2 lang="en">How it works</h2>
+          </div>
+          <p lang="fr">Pas de menu papier, pas d'attente pour un serveur. Vous commandez à la tablette, autant de fois que vous voulez.</p>
+          <p lang="en">No paper menu and no waving for a server. You order from the tablet at your table, as many rounds as you like.</p>
+        </div>
+        <ol class="steps">
+          <li><h3 lang="fr">Prenez place</h3><h3 lang="en">Grab a table</h3>
+            <p lang="fr">Sans réservation, présentez-vous. Pour un groupe ou un vendredi soir, appelez avant.</p>
+            <p lang="en">Walk in, or call ahead for groups and Friday nights.</p></li>
+          <li><h3 lang="fr">Commandez à la tablette</h3><h3 lang="en">Tap to order</h3>
+            <p lang="fr">Chaque table a sa tablette. Choisissez vos plats d'un clic, en français ou en anglais.</p>
+            <p lang="en">Every table has a tablet. Pick your dishes with a tap, in French or English.</p></li>
+          <li><h3 lang="fr">On vous sert</h3><h3 lang="en">It comes to you</h3>
+            <p lang="fr">Les plats arrivent au fur et à mesure. L'eau est à volonté aussi, avec un pichet par table.</p>
+            <p lang="en">Plates arrive as they're made. Water's unlimited too, with a jug on every table.</p></li>
+          <li><h3 lang="fr">Recommencez</h3><h3 lang="en">Go again</h3>
+            <p lang="fr">Encore faim ? Une autre ronde. Commandez ce que vous finirez, pour éviter le gaspillage.</p>
+            <p lang="en">Still hungry? Another round. Order what you'll finish so nothing goes to waste.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="block menu-sec" id="menu">
+      <div class="wrap">
+        <div class="head">
+          <div>
+            <span class="jp-tag">メニュー · MENU</span>
+            <h2 lang="fr">Au menu</h2><h2 lang="en">On the menu</h2>
+          </div>
+          <p lang="fr">Une formule à volonté, midi et soir. Voici les plats que nos clients commandent encore et encore.</p>
+          <p lang="en">One all-you-can-eat formula, lunch and dinner. These are the plates regulars keep reordering.</p>
+        </div>
+
+        <!-- EDIT: replace the three "—" values below with real prices from the restaurant -->
+        <div class="plates">
+          <figure class="plate wide"><img src="img/food-torched.jpg" width="1169" height="1160" alt="Plateaux de nigiri au saumon brûlé et de makis garnis" loading="lazy"><figcaption><span lang="fr">Nigiri brûlés au chalumeau</span><span lang="en">Torched nigiri</span></figcaption></figure>
+          <figure class="plate"><img src="img/food-rolls.jpg" width="1169" height="1539" alt="Makis brûlés garnis de tobiko et de mayo épicée" loading="lazy"><figcaption><span lang="fr">Makis signature</span><span lang="en">Signature rolls</span></figcaption></figure>
+          <figure class="plate"><img src="img/food-table.jpg" width="1170" height="1539" alt="Makis et nigiri brûlés sur une table, sous les lanternes" loading="lazy"><figcaption><span lang="fr">Une ronde de plus</span><span lang="en">One more round</span></figcaption></figure>
+        </div>
+
+        <div class="price">
+          <div><span class="label"><span lang="fr">Midi</span><span lang="en">Lunch</span></span><strong>— $</strong><small lang="fr">11 h 30 à 15 h · prix à confirmer</small><small lang="en">11:30 a.m. to 3 p.m. · price to confirm</small></div>
+          <div><span class="label"><span lang="fr">Soir</span><span lang="en">Dinner</span></span><strong>— $</strong><small lang="fr">Dès 15 h · prix à confirmer</small><small lang="en">From 3 p.m. · price to confirm</small></div>
+          <div><span class="label"><span lang="fr">Enfants</span><span lang="en">Kids</span></span><strong>— $</strong><small lang="fr">Prix à confirmer</small><small lang="en">Price to confirm</small></div>
+        </div>
+
+        <div class="dishes">
+          <div class="dish hot"><span class="ico">炙</span><h3><span lang="fr">Sushi brûlé</span><span lang="en">Torched sushi</span><span class="tag">SIGNATURE</span></h3>
+            <p lang="fr">Saumon, thon et pétoncle passés au chalumeau à la commande. Le plat pour lequel on vient.</p>
+            <p lang="en">Salmon, tuna and scallop flame-seared to order. The one people come for.</p></div>
+          <div class="dish hot"><span class="ico">巻</span><h3>Manga roll<span class="tag">MAISON</span></h3>
+            <p lang="fr">Le maki signature de la maison, garni puis brûlé.</p>
+            <p lang="en">The house signature roll, topped and torched.</p></div>
+          <div class="dish"><span class="ico">丼</span><h3>Donburi</h3>
+            <p lang="fr">Bols de riz garnis, dont le riz au saumon brûlé.</p>
+            <p lang="en">Rice bowls, including torched salmon rice.</p></div>
+          <div class="dish"><span class="ico">牛</span><h3>Beef tataki</h3>
+            <p lang="fr">Bœuf saisi, tranché fin, sauce ponzu.</p>
+            <p lang="en">Seared beef, thinly sliced, with ponzu.</p></div>
+          <div class="dish"><span class="ico">麺</span><h3><span lang="fr">Ramen au bœuf</span><span lang="en">Beef ramen</span></h3>
+            <p lang="fr">Un bol chaud entre deux rondes de sushi.</p>
+            <p lang="en">A hot bowl between rounds of sushi.</p></div>
+          <div class="dish"><span class="ico">串</span><h3>Brochettes</h3>
+            <p lang="fr">Viandes grillées sur le feu, style izakaya.</p>
+            <p lang="en">Grilled meat skewers, izakaya style.</p></div>
+          <div class="dish"><span class="ico">刺</span><h3>Sashimi</h3>
+            <p lang="fr">Tranches de poisson cru, simplement.</p>
+            <p lang="en">Slices of raw fish, kept simple.</p></div>
+          <div class="dish"><span class="ico">皿</span><h3><span lang="fr">Assiettes combo</span><span lang="en">Combo plates</span></h3>
+            <p lang="fr">Un assortiment pour goûter un peu de tout.</p>
+            <p lang="en">An assortment to try a bit of everything.</p></div>
+        </div>
+        <p class="menu-note" lang="fr">Allergies ou restrictions ? Dites-le à votre serveur avant de commander.</p>
+        <p class="menu-note" lang="en">Allergies or dietary needs? Tell your server before you order.</p>
+      </div>
+    </section>
+
+    <section class="block" id="salle">
+      <div class="wrap">
+        <div class="head">
+          <div>
+            <span class="jp-tag">店内 · INSIDE</span>
+            <h2 lang="fr">Une salle pour les fans</h2><h2 lang="en">A room built for fans</h2>
+          </div>
+          <p lang="fr">Luffy, Naruto, Sans-Visage, des ombrelles et des lanternes partout. Apportez votre téléphone, vous allez prendre des photos.</p>
+          <p lang="en">Luffy, Naruto, No-Face, parasols and lanterns everywhere. Bring your phone, you'll want photos.</p>
+        </div>
+        <div class="inside">
+          <figure class="shot luffy"><img src="img/luffy.jpg" alt="Statue grandeur nature de Luffy de One Piece dans la salle" loading="lazy"><figcaption><h3 lang="fr">Luffy grandeur nature</h3><h3 lang="en">Life-size Luffy</h3>
+            <p lang="fr">Le capitaine au chapeau de paille vous attend. La photo est obligatoire.</p>
+            <p lang="en">The Straw Hat captain is waiting. The photo is mandatory.</p></figcaption></figure>
+          <figure class="shot naruto"><img src="img/naruto.jpg" alt="Statue grandeur nature de Naruto en mode ermite, bras croisés, sur un socle au symbole de Konoha" loading="lazy"><figcaption><h3 lang="fr">Naruto grandeur nature</h3><h3 lang="en">Life-size Naruto</h3>
+            <p lang="fr">Le ninja de Konoha en mode ermite monte la garde. Une photo avec les deux, c'est la règle.</p>
+            <p lang="en">The Konoha ninja stands guard in Sage Mode. A photo with both is the rule.</p></figcaption></figure>
+          <figure class="shot umbrella"><img src="img/umbrellas.jpg" alt="Plafond couvert d'ombrelles japonaises rouges et blanches" loading="lazy"><figcaption><h3 lang="fr">Ciel d'ombrelles</h3><h3 lang="en">Umbrella ceiling</h3>
+            <p lang="fr">Des dizaines d'ombrelles japonaises au-dessus des tables.</p><p lang="en">Dozens of Japanese parasols over the tables.</p></figcaption></figure>
+          <figure class="shot"><img src="img/mascot-lanterns.jpg" alt="Mur de lanternes japonaises avec la mascotte Godzilla qui tient un sushi" loading="lazy"><figcaption><h3 lang="fr">Le mur des lanternes</h3><h3 lang="en">The lantern wall</h3>
+            <p lang="fr">Notre mascotte, sushi en main, entre les lanternes.</p><p lang="en">Our mascot, sushi in hand, among the lanterns.</p></figcaption></figure>
+          <figure class="shot"><img src="img/noface.jpg" alt="Trois figurines de Sans-Visage du Voyage de Chihiro" loading="lazy"><figcaption><h3 lang="fr">Sans-Visage</h3><h3 lang="en">No-Face</h3>
+            <p lang="fr">Des figurines Ghibli cachées partout.</p><p lang="en">Ghibli figures tucked in every corner.</p></figcaption></figure>
+          <figure class="shot strawhats"><img src="img/strawhats.jpg" alt="Mur de chapeaux de paille autour du drapeau pirate de One Piece" loading="lazy"><figcaption><h3 lang="fr">Le mur des chapeaux</h3><h3 lang="en">The straw hat wall</h3>
+            <p lang="fr">Le Jolly Roger de l'équipage, entouré de chapeaux de paille.</p><p lang="en">The crew's Jolly Roger, ringed with straw hats.</p></figcaption></figure>
+          <figure class="shot tablet">
+            <figcaption>
+              <span class="tb-tag">タブレット注文</span>
+              <h3 lang="fr">Commande à la tablette</h3><h3 lang="en">Tablet ordering</h3>
+              <p lang="fr">Touchez, envoyez, c'est servi. Autant de rondes que vous voulez.</p><p lang="en">Tap, send, it's served. As many rounds as you like.</p>
+            </figcaption>
+            <div class="tb-device" aria-hidden="true">
+              <div class="tb-screen">
+                <div class="tb-top"><span>MANGA BISTRO</span><span lang="fr">3 PLATS</span><span lang="en">3 PLATES</span></div>
+                <div class="tb-grid">
+                  <span class="tb-item"><img src="img/food-torched-sq.jpg" alt="" loading="lazy"><i>+</i></span>
+                  <span class="tb-item"><img src="img/food-rolls-sq.jpg" alt="" loading="lazy"><i>+</i></span>
+                  <span class="tb-item"><img src="img/food-spread-sq.jpg" alt="" loading="lazy"><i class="tap">+</i></span>
+                </div>
+                <div class="tb-send"><span lang="fr">Envoyer la commande</span><span lang="en">Send order</span></div>
+              </div>
+            </div>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="avis" style="padding-top:0">
+      <div class="wrap">
+        <div class="head">
+          <div>
+            <span class="jp-tag">評判 · REVIEWS</span>
+            <h2 lang="fr">Ce qu'en disent les clients</h2><h2 lang="en">What guests say</h2>
+          </div>
+        </div>
+        <div class="reviews">
+          <div class="score">
+            <div class="big"><span lang="fr">4,6</span><span lang="en">4.6</span><span style="font-size:32px"> / 5</span></div>
+            <p lang="fr">Note moyenne sur plus de 3 700 avis Google.</p>
+            <p lang="en">Average across 3,700+ Google reviews.</p>
+          </div>
+          <div class="bars" role="img" aria-label="74% 5 stars, 14% 4 stars, 5% 3 stars, 7% 2 stars, 0% 1 star">
+            <div class="row"><span>5 ★</span><span class="track"><span class="fill" style="display:block;width:74%"></span></span><span>74 %</span></div>
+            <div class="row"><span>4 ★</span><span class="track"><span class="fill" style="display:block;width:14%"></span></span><span>14 %</span></div>
+            <div class="row"><span>3 ★</span><span class="track"><span class="fill" style="display:block;width:5%"></span></span><span>5 %</span></div>
+            <div class="row"><span>2 ★</span><span class="track"><span class="fill" style="display:block;width:7%"></span></span><span>7 %</span></div>
+            <div class="row"><span>1 ★</span><span class="track"><span class="fill" style="display:block;width:0%"></span></span><span>0 %</span></div>
+            <p class="src" lang="fr">Répartition de 1 378 notes sur RestoMontreal.</p>
+            <p class="src" lang="en">Breakdown of 1,378 ratings on RestoMontreal.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block visit-sec" id="visite">
+      <div class="wrap">
+        <div class="head">
+          <div>
+            <span class="jp-tag">アクセス · VISIT</span>
+            <h2 lang="fr">Nous trouver</h2><h2 lang="en">Find us</h2>
+          </div>
+          <p lang="fr">Rue Sainte-Catherine Ouest, dans le Village Shaughnessy, à quelques minutes du métro Guy-Concordia.</p>
+          <p lang="en">On Sainte-Catherine West in Shaughnessy Village, a few minutes' walk from Guy-Concordia metro.</p>
+        </div>
+        <div class="visit">
+          <div class="card">
+            <h3 lang="fr">Heures</h3><h3 lang="en">Hours</h3>
+            <table class="hours" id="hours"><tbody></tbody></table>
+          </div>
+          <div class="card">
+            <h3 lang="fr">Adresse et réservations</h3><h3 lang="en">Address and bookings</h3>
+            <p>1836A rue Sainte-Catherine O.<br>Montréal (QC) H3H 1M1</p>
+            <div class="copy"><code id="phone">514 316-8862</code><button type="button" class="mini" id="copy-phone"><span lang="fr">COPIER</span><span lang="en">COPY</span></button></div>
+            <p style="font-size:14px;color:var(--ink-soft)" lang="fr">Les réservations se font par téléphone.</p>
+            <p style="font-size:14px;color:var(--ink-soft)" lang="en">Reservations are by phone.</p>
+            <a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=1836A+Rue+Sainte-Catherine+O,+Montr%C3%A9al,+QC+H3H+1M1" target="_blank" rel="noopener"><span lang="fr">Itinéraire</span><span lang="en">Directions</span></a>
+          </div>
+          <div class="card">
+            <h3 lang="fr">Bon à savoir</h3><h3 lang="en">Good to know</h3>
+            <ul class="facts">
+              <li><span lang="fr">Entrée accessible en fauteuil roulant</span><span lang="en">Wheelchair-accessible entrance</span></li>
+              <li><span lang="fr">Idéal pour les familles et les groupes</span><span lang="en">Great for families and groups</span></li>
+              <li><span lang="fr">Commande à emporter et livraison</span><span lang="en">Takeout and delivery</span></li>
+              <li><span lang="fr">Visa, Mastercard, AMEX, Interac, sans contact</span><span lang="en">Visa, Mastercard, AMEX, Interac, contactless</span></li>
+              <li><span lang="fr">Métro Guy-Concordia</span><span lang="en">Guy-Concordia metro</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="big">Manga Bistro <span>マンガ</span></div>
+      <nav aria-label="Social">
+        <a class="social" href="https://www.instagram.com/manga_bistro/" target="_blank" rel="noopener" aria-label="Instagram @manga_bistro"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg><span>@manga_bistro</span></a>
+        <a class="social fb" href="https://www.facebook.com/MangaBistro" target="_blank" rel="noopener" aria-label="Facebook Manga Bistro"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="currentColor"><path d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 3.9v2.3H7.9v3h2.6V21h3z"/></svg><span>Manga Bistro</span></a>
+        <a class="social menu" href="#menu"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 3v18M17 3v18"/><path d="M4 8h6M14 13h6"/></svg><span>Menu</span></a>
+        <a class="social clock" href="#visite"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg><span lang="fr">Heures</span><span lang="en">Hours</span></a>
+      </nav>
+      <small>© 2026 Manga Bistro Sushi · 1836A rue Sainte-Catherine O., Montréal</small>
+    </div>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var site = document.getElementById('site');
+  var TZ = 'America/Montreal';
+  // [open, close] in minutes after midnight; index 0 = Sunday
+  var HOURS = [[690,1350],[690,1350],[690,1350],[690,1350],[690,1350],[690,1365],[690,1365]];
+  var DAYS = {
+    fr: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
+    en: ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
+  };
+  function fmt(m, lang) {
+    var h = Math.floor(m / 60), mm = m % 60;
+    if (lang === 'fr') return h + ' h ' + (mm < 10 ? '0' : '') + mm;
+    var ap = h >= 12 ? 'p.m.' : 'a.m.', h12 = h % 12 || 12;
+    return h12 + ':' + (mm < 10 ? '0' : '') + mm + ' ' + ap;
+  }
+  function nowMontreal() {
+    var parts = new Intl.DateTimeFormat('en-US', { timeZone: TZ, weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date());
+    var o = {}; parts.forEach(function (p) { o[p.type] = p.value; });
+    return { day: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].indexOf(o.weekday), min: (+o.hour) * 60 + (+o.minute) };
+  }
+  function render() {
+    var lang = site.dataset.lang, n = nowMontreal();
+    var body = document.querySelector('#hours tbody'); body.innerHTML = '';
+    for (var i = 1; i <= 7; i++) {
+      var d = i % 7, tr = document.createElement('tr');
+      if (d === n.day) tr.className = 'today';
+      tr.innerHTML = '<td>' + DAYS[lang][d] + '</td><td>' + fmt(HOURS[d][0], lang) + ' – ' + fmt(HOURS[d][1], lang) + '</td>';
+      body.appendChild(tr);
+    }
+    var st = document.getElementById('status'), h = HOURS[n.day], open = n.min >= h[0] && n.min < h[1];
+    st.className = 'status ' + (open ? 'open' : 'closed');
+    var next = n.min < h[0] ? h[0] : HOURS[(n.day + 1) % 7][0];
+    st.querySelector('.now').textContent = open ? (lang === 'fr' ? 'OUVERT' : 'OPEN') : (lang === 'fr' ? 'FERMÉ' : 'CLOSED');
+    st.querySelector('.when').textContent = open
+      ? (lang === 'fr' ? "jusqu'à " : 'until ') + fmt(h[1], lang)
+      : (lang === 'fr' ? 'ouvre à ' : 'opens ') + fmt(next, lang);
+  }
+  function setLang(l) {
+    site.dataset.lang = l;
+    document.documentElement.lang = l;
+    ['fr','en'].forEach(function (x) { document.getElementById('lang-' + x).setAttribute('aria-pressed', x === l); });
+    try { localStorage.setItem('mb-lang', l); } catch (e) {}
+    render();
+  }
+  document.querySelectorAll('.lang button').forEach(function (b) { b.addEventListener('click', function () { setLang(b.dataset.set); }); });
+  var saved = null; try { saved = localStorage.getItem('mb-lang'); } catch (e) {}
+  if (!saved && navigator.language && navigator.language.slice(0, 2) === 'en') saved = 'en';
+  setLang(saved === 'en' ? 'en' : 'fr');
+  setInterval(render, 60000);
+
+
+  var bars = document.querySelector('.bars');
+  if ('IntersectionObserver' in window && bars) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { bars.classList.add('play'); io.disconnect(); } });
+    }, { rootMargin: '0px 0px 120px 0px' });
+    io.observe(bars);
+  }
+
+
+  /* Loading screen: waits for fonts and the hero images, never longer than 10 s */
+  var loader = document.getElementById('loader'), fill = document.getElementById('ld-fill');
+  var started = Date.now(), finished = false;
+  function finish() {
+    if (finished) return; finished = true;
+    var wait = Math.max(0, 500 - (Date.now() - started));
+    setTimeout(function () { loader.classList.add('done'); site.classList.remove('is-loading'); }, wait);
+  }
+  var eager = Array.prototype.filter.call(document.images, function (i) { return i.loading !== 'lazy'; });
+  var total = eager.length + 1, loaded = 0;
+  function step() { loaded++; fill.style.width = Math.max(8, Math.round(loaded / total * 100)) + '%'; if (loaded >= total) finish(); }
+  eager.forEach(function (i) { if (i.complete) step(); else { i.addEventListener('load', step); i.addEventListener('error', step); } });
+  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(step, step);
+  window.addEventListener('load', finish);
+  setTimeout(function () { if (!finished) document.getElementById('ld-slow').hidden = false; }, 3500);
+  setTimeout(finish, 10000);
+  document.getElementById('ld-skip').addEventListener('click', finish);
+
+  /* Broken images fall back to a halftone panel */
+  Array.prototype.forEach.call(document.images, function (i) {
+    function broke() { i.parentNode.classList.add('broken'); }
+    if (i.complete && i.naturalWidth === 0 && i.src) broke(); else i.addEventListener('error', broke);
+  });
+
+  /* Offline and slow-connection notices */
+  var toast = document.getElementById('toast'), tTimer;
+  var MSG = {
+    offline: { fr: ['Hors ligne', 'Pas de connexion. Les heures et l\'adresse restent affichées. Pour réserver : 514 316-8862.'], en: ['You\'re offline', 'No connection. Hours and address are still shown. To book: 514 316-8862.'] },
+    online: { fr: ['De retour en ligne', 'La connexion est revenue.'], en: ['Back online', 'Your connection is back.'] },
+    slow: { fr: ['Connexion lente', 'Les photos peuvent prendre un moment. Le menu et les heures sont déjà là.'], en: ['Slow connection', 'Photos may take a moment. The menu and hours are already here.'] }
+  };
+  function notify(kind, autoHide) {
+    var m = MSG[kind][site.dataset.lang];
+    document.getElementById('toast-title').textContent = m[0];
+    document.getElementById('toast-body').textContent = m[1];
+    toast.className = 'toast' + (kind === 'online' ? ' ok' : '');
+    toast.hidden = false; clearTimeout(tTimer);
+    if (autoHide) tTimer = setTimeout(function () { toast.hidden = true; }, autoHide);
+  }
+  document.getElementById('toast-x').addEventListener('click', function () { toast.hidden = true; });
+  window.addEventListener('offline', function () { notify('offline'); });
+  window.addEventListener('online', function () { notify('online', 3500); });
+  if (navigator.onLine === false) notify('offline');
+  else {
+    var c = navigator.connection;
+    if (c && (c.saveData || /(^|-)2g$/.test(c.effectiveType || ''))) notify('slow', 8000);
+  }
+
+  document.getElementById('copy-phone').addEventListener('click', function () {
+    var btn = this, el = document.getElementById('phone');
+    function done() { btn.querySelector('[lang=fr]').textContent = 'COPIÉ'; btn.querySelector('[lang=en]').textContent = 'COPIED'; }
+    function sel() { var r = document.createRange(); r.selectNodeContents(el); var s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+    try { navigator.clipboard.writeText('+1 514 316 8862').then(done, sel); } catch (e) { sel(); }
+  });
+})();
+</script>
+
+</body></html>

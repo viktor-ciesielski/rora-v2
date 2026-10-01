@@ -21,7 +21,8 @@ run `python3 -m http.server` in this folder and open http://localhost:8000.)
 | `index.html` | Every word on the page. This is the file to edit for copy changes. |
 | `assets/css/site.css` | All the styling: colours, type, spacing, layout. |
 | `assets/js/site.js` | The motion — hero artwork, scroll reveals, parallax, cursor. |
-| `assets/img/` | Screenshots of the demos. |
+| `assets/img/` | Screenshots used in the work section. |
+| `demos/` | The demos themselves, served from the site (`/demos/manga-bistro/`). |
 | `assets/favicon.svg` | The little icon in the browser tab. |
 
 ## Still to replace
@@ -29,16 +30,11 @@ run `python3 -m http.server` in this folder and open http://localhost:8000.)
 This is a first draft. Anything with a dotted underline on the page is a
 placeholder:
 
-- **A second demo.** The work section shows one project. To add the barbershop
-  demo later, copy the Vesari `<article class="piece wide rv">` block in
-  `index.html`, point the `<img>` at a new screenshot in `assets/img/`, and
-  rewrite the caption.
+- **More work.** The work section shows one demo. A second is a copy of the
+  `<article class="piece wide rv">` block in `index.html`, a screenshot in
+  `assets/img/`, and the demo itself under `demos/`.
 - **Response time and availability** in the contact section — confirm or cut
   them.
-
-The Vesari slot is real: `assets/img/demo-vesari.jpg` is the demo captured
-running. Note the 3D model in it carries a visible Omega logo, so swap the model
-or reshoot before the site goes public.
 
 Contact details are real: viktor@roramake.ca and 438-855-3303.
 

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Page introuvable · Manga Bistro</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Kaku+Gothic+New:wght@400;700&family=DM+Mono:wght@500&display=swap">
+<style>
+  :root { --paper: #F2F3EE; --ink: #17181D; --ink-soft: #4A4D57; --salmon: #FF7650; --salmon-deep: #D9502B; --sakura: #F6BCCB;
+    --display: "Dela Gothic One", "Hiragino Kaku Gothic ProN", "Arial Black", sans-serif; --body: "Zen Kaku Gothic New", "Hiragino Sans", "Segoe UI", system-ui, sans-serif; --mono: "DM Mono", ui-monospace, Menlo, monospace; color-scheme: light; }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 400 16px/1.6 var(--body); padding: 20px; display: grid; place-items: center; }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; } }
+  .page { width: 100%; max-width: 960px; display: grid; grid-template-columns: 1fr 1.2fr; gap: 14px; }
+  .panel { border: 3px solid var(--ink); position: relative; overflow: hidden; }
+  .art { background: var(--ink); display: grid; place-items: center; min-height: 340px; clip-path: polygon(0 0, 100% 0, 96% 100%, 0 100%); }
+  .art::before { content: ""; position: absolute; inset: -50%; background: repeating-conic-gradient(rgba(242,243,238,.12) 0 1.2deg, transparent 1.2deg 7deg); animation: spin 80s linear infinite; }
+  .code { position: relative; font: 400 clamp(90px, 16vw, 170px)/1 var(--display); color: var(--salmon); -webkit-text-stroke: 3px var(--paper); paint-order: stroke; transform: rotate(-6deg); animation: shake 3s ease-in-out infinite; }
+  .sfx { position: absolute; bottom: 18px; right: 22px; font: 400 26px/1 var(--display); color: var(--sakura); transform: rotate(8deg); }
+  .text { padding: clamp(24px, 4vw, 44px); display: flex; flex-direction: column; gap: 18px; background: radial-gradient(circle at 1px 1px, rgba(23,24,29,.14) 1.2px, transparent 1.6px) 0 0 / 9px 9px, var(--paper); }
+  .label { font: 500 12px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; background: var(--ink); color: var(--paper); padding: 8px 12px; align-self: flex-start; }
+  h1 { font: 400 clamp(30px, 4.4vw, 48px)/1.08 var(--display); margin: 0; text-wrap: balance; }
+  p { margin: 0; color: var(--ink-soft); max-width: 42ch; }
+  .en { border-top: 2px dashed var(--ink-soft); padding-top: 14px; font-size: 15px; }
+  .en strong { color: var(--ink); }
+  .ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn { display: inline-flex; gap: 8px; align-items: center; padding: 12px 18px; border: 3px solid var(--ink); background: var(--paper); color: var(--ink); font: 700 15px/1 var(--body); text-decoration: none; box-shadow: 5px 5px 0 var(--ink); cursor: pointer; transition: transform .12s, box-shadow .12s; }
+  .btn:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--ink); }
+  .btn.primary { background: var(--salmon); }
+  :focus-visible { outline: 3px solid var(--salmon); outline-offset: 3px; }
+  .phone { font: 500 18px/1 var(--mono); user-select: all; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes shake { 0%, 86%, 100% { transform: rotate(-6deg); } 90% { transform: rotate(-2deg) translateX(4px); } 94% { transform: rotate(-9deg) translateX(-4px); } }
+  @media (max-width: 720px) { .page { grid-template-columns: 1fr; } .art { min-height: 200px; clip-path: none; } }
+</style>
+</head>
+<body>
+  <main class="page">
+    <div class="panel art" aria-hidden="true"><span class="code">404</span><span class="sfx">パクッ!</span></div>
+    <div class="panel text">
+      <span class="label">Erreur 404 · Page introuvable</span>
+      <h1>Oups, cette page s'est fait manger.</h1>
+      <p>Le lien est peut-être ancien ou mal écrit. Le menu, lui, est toujours là.</p>
+      <p class="en"><strong>Page not found.</strong> The link may be old or mistyped. The menu is still right here.</p>
+      <div class="ctas"><a class="btn primary" href="./">Accueil · Home</a><a class="btn" href="./#menu">Menu</a></div>
+      <p>Réservations · Bookings : <span class="phone">514 316-8862</span></p>
+    </div>
+  </main>
+  
+</body>
+</html>

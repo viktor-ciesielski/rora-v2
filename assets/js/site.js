@@ -100,7 +100,7 @@
           if(r.bottom < -200 || r.top > vh + 200) return;
           var p = (r.top + r.height/2 - vh/2) / vh;
           var media = shot.querySelector('canvas, img');
-          if(media) media.style.setProperty('--py', (p * -26).toFixed(2) + 'px');
+          if(media) media.style.setProperty('--py', (p * -16).toFixed(2) + 'px');
         });
       }
       ticking = false;
