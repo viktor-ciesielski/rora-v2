@@ -22,7 +22,7 @@ run `python3 -m http.server` in this folder and open http://localhost:8000.)
 | `assets/css/site.css` | All the styling: colours, type, spacing, layout. |
 | `assets/js/site.js` | The motion — hero artwork, scroll reveals, parallax, cursor. |
 | `assets/img/` | Screenshots used in the work section. |
-| `demos/` | The demos themselves, served from the site (`/demos/manga-bistro/`). |
+| `demos/` | The demos themselves, served from the site (`/demos/manga-bistro/`) and opened in the viewer. |
 | `assets/favicon.svg` | The little icon in the browser tab. |
 
 ## Still to replace
@@ -51,6 +51,9 @@ Then point roramake.ca at whichever one you pick.
 
 ## Notes
 
+- Clicking a work tile opens that demo in a viewer over the page rather than
+  sending the visitor away. Without JavaScript the same link just goes to the
+  demo's own page.
 - The page adapts to light and dark mode, works down to phone width, and turns
   all motion off for visitors whose device asks for reduced motion.
 - The fonts (Archivo, Instrument Sans, DM Mono) load from Google Fonts, so the

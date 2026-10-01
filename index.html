@@ -73,7 +73,7 @@
 
     <div class="work">
       <article class="piece wide rv">
-        <a class="shot" href="demos/manga-bistro/" target="_blank" rel="noopener">
+        <a class="shot" href="demos/manga-bistro/" data-demo="Manga Bistro">
           <img src="assets/img/demo-manga-bistro.jpg" alt="The Manga Bistro site: an all-you-can-eat sushi headline beside a photograph of sushi platters.">
           <div class="grain"></div>
           <span class="tag mono">Open the demo &rarr;</span>
@@ -162,6 +162,14 @@
     </div>
   </section>
 </main>
+
+<div class="viewer" id="viewer" hidden>
+  <div class="viewer-bar">
+    <span class="mono viewer-title" id="viewerTitle"></span>
+    <button class="viewer-close mono" id="viewerClose" type="button">Close <span aria-hidden="true">&times;</span></button>
+  </div>
+  <iframe class="viewer-frame" id="viewerFrame" title="Demo" src="about:blank"></iframe>
+</div>
 
 <footer>
   <div class="mono">roramake.ca</div>

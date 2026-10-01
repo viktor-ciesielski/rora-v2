@@ -1,5 +1,6 @@
 /* Rora — roramake.ca
-   Generative hero, scroll reveals, parallax, swipeable word band, cursor.
+   Generative hero, scroll reveals, parallax, swipeable word band, in-page
+   demo viewer, cursor.
    No dependencies. */
 
 (function(){
@@ -181,6 +182,51 @@
     band.addEventListener('pointerup', release);
     band.addEventListener('pointercancel', release);
     band.addEventListener('dragstart', function(e){ e.preventDefault(); });
+  })();
+
+  /* ---------- demos open inside the site, not on someone else's ---------- */
+  (function(){
+    var viewer = document.getElementById('viewer');
+    var frame  = document.getElementById('viewerFrame');
+    var title  = document.getElementById('viewerTitle');
+    var closeB = document.getElementById('viewerClose');
+    var tiles  = [].slice.call(document.querySelectorAll('[data-demo]'));
+    if(!viewer || !frame || !tiles.length) return;
+
+    var opener = null;
+
+    function open(tile){
+      opener = tile;
+      title.textContent = tile.getAttribute('data-demo') || 'Demo';
+      frame.title = title.textContent + ' demo';
+      frame.src = tile.getAttribute('href');
+      viewer.hidden = false;
+      document.body.classList.add('viewing');
+      requestAnimationFrame(function(){ viewer.classList.add('open'); });
+      closeB.focus();
+    }
+    function close(){
+      viewer.classList.remove('open');
+      document.body.classList.remove('viewing');
+      var done = function(){
+        viewer.hidden = true;
+        frame.src = 'about:blank';
+        if(opener){ opener.focus(); opener = null; }
+      };
+      if(reduce) done(); else setTimeout(done, 300);
+    }
+
+    tiles.forEach(function(tile){
+      tile.addEventListener('click', function(e){
+        if(e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;  /* let people force a new tab */
+        e.preventDefault();
+        open(tile);
+      });
+    });
+    closeB.addEventListener('click', close);
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && !viewer.hidden) close();
+    });
   })();
 
   /* ---------- cursor ---------- */
