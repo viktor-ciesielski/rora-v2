@@ -22,7 +22,7 @@ run `python3 -m http.server` in this folder and open http://localhost:8000.)
 | `assets/css/site.css` | All the styling: colours, type, spacing, layout. |
 | `assets/js/site.js` | The motion — hero artwork, scroll reveals, parallax, cursor. |
 | `assets/img/` | Screenshots used in the work section. |
-| `demos/` | The demos themselves, served from the site (`/demos/manga-bistro/`) and opened in the viewer. |
+| `demos/` | The demos themselves, served from the site (`/demos/kaiju-roll/`) and opened in the viewer. |
 | `assets/favicon.svg` | The little icon in the browser tab. |
 
 ## Still to replace
