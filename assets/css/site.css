@@ -74,13 +74,6 @@ img,canvas{max-width:100%;display:block;}
 .wrap{padding-inline:var(--gut);}
 .rule{height:1px;background:var(--line);border:0;margin:0;}
 
-/* ---------- placeholder marker ---------- */
-.tbc{
-  border-bottom:1px dotted currentColor;
-  cursor:help;
-  opacity:.92;
-}
-
 /* ---------- header ---------- */
 header{
   position:fixed;inset:0 0 auto 0;z-index:60;

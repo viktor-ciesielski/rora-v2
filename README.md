@@ -27,14 +27,12 @@ run `python3 -m http.server` in this folder and open http://localhost:8000.)
 
 ## Still to replace
 
-This is a first draft. Anything with a dotted underline on the page is a
-placeholder:
-
 - **More work.** The work section shows one demo. A second is a copy of the
   `<article class="piece wide rv">` block in `index.html`, a screenshot in
   `assets/img/`, and the demo itself under `demos/`.
-- **Response time and availability** in the contact section — confirm or cut
-  them.
+- **The process timings, response time and availability** are reasonable
+  defaults rather than anything you confirmed. Change them in `index.html` when
+  you know better.
 
 Contact details are real: viktor@roramake.ca and 438-855-3303.
 
